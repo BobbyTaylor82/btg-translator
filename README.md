@@ -6,3 +6,38 @@ Try it out for yourself.  https://btg-translator.herokuapp.com
 ![](photo.png)
 
 
+
+/* REXX program to read dataset names from a PS file */
+
+/* Specify the name of your PS file */
+psFileName = 'your_ps_file.txt'
+
+/* Open the PS file for reading */
+parse upper arg psFileName
+psFile = outtrap("lines.")
+address tso "ALLOC F(INFILE) DSN('"psFileName"') SHR REUSE"
+address tso "EXECIO * DISKR INFILE (STEM lines. FINIS"
+
+/* Check for errors while opening the file */
+if rc <> 0 then
+   do
+      say "Error opening the file. RC:" rc
+      exit
+   end
+
+/* Process each line and display dataset names */
+do i = 1 to lines.0
+   /* Extract dataset name from the line */
+   datasetName = line.i
+
+   /* Display the dataset name */
+   say datasetName
+end
+
+/* Close the file */
+address tso "FREE F(INFILE)"
+
+exit
+
+
+
