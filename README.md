@@ -6,10 +6,3 @@ Try it out for yourself.  https://btg-translator.herokuapp.com
 ![](photo.png)
 
 
-//MAKEPDS  JOB ...
-//STEP1    EXEC PGM=IEFBR14
-//SYSUT1   DD DSN=#532.FILE.PDS,DISP=(NEW,CATLG,DELETE),
-//            SPACE=(TRK,(1,1),RLSE),
-//            UNIT=SYSDA
-//SYSUT2   DD DSN=#523.FILE2.PDS,DISP=OLD
-//SYSPRINT DD SYSOUT=A
