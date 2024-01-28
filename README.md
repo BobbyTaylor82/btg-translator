@@ -39,5 +39,11 @@ address tso "FREE F(INFILE)"
 
 exit
 
+/* Create a copy of the PDS */
+   address tso "SUBMIT 'IEBCOPY INDD(SYSIN) OUTDD(OUTFILE) REPLACE'"
+   "SYSIN." = "COPY INDD(INFILE("originalDatasetName")) OUTDD(OUTFILE("copyDatasetName"))"
 
+   /* Check for errors while creating the copy */
+   if rc <> 0 then
+      say "Error creating the copy. RC:" rc
 
