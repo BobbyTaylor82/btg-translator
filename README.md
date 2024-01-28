@@ -6,44 +6,10 @@ Try it out for yourself.  https://btg-translator.herokuapp.com
 ![](photo.png)
 
 
-
-/* REXX program to read dataset names from a PS file */
-
-/* Specify the name of your PS file */
-psFileName = 'your_ps_file.txt'
-
-/* Open the PS file for reading */
-parse upper arg psFileName
-psFile = outtrap("lines.")
-address tso "ALLOC F(INFILE) DSN('"psFileName"') SHR REUSE"
-address tso "EXECIO * DISKR INFILE (STEM lines. FINIS"
-
-/* Check for errors while opening the file */
-if rc <> 0 then
-   do
-      say "Error opening the file. RC:" rc
-      exit
-   end
-
-/* Process each line and display dataset names */
-do i = 1 to lines.0
-   /* Extract dataset name from the line */
-   datasetName = line.i
-
-   /* Display the dataset name */
-   say datasetName
-end
-
-/* Close the file */
-address tso "FREE F(INFILE)"
-
-exit
-
-/* Create a copy of the PDS */
-   address tso "SUBMIT 'IEBCOPY INDD(SYSIN) OUTDD(OUTFILE) REPLACE'"
-   "SYSIN." = "COPY INDD(INFILE("originalDatasetName")) OUTDD(OUTFILE("copyDatasetName"))"
-
-   /* Check for errors while creating the copy */
-   if rc <> 0 then
-      say "Error creating the copy. RC:" rc
-
+//MAKEPDS  JOB ...
+//STEP1    EXEC PGM=IEFBR14
+//SYSUT1   DD DSN=#532.FILE.PDS,DISP=(NEW,CATLG,DELETE),
+//            SPACE=(TRK,(1,1),RLSE),
+//            UNIT=SYSDA
+//SYSUT2   DD DSN=#523.FILE2.PDS,DISP=OLD
+//SYSPRINT DD SYSOUT=A
